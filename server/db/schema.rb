@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_114133) do
+ActiveRecord::Schema.define(version: 2021_11_10_115229) do
+
+  create_table "fridges", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_fridges_on_user_id"
+  end
 
   create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "session_id", null: false
@@ -45,4 +52,5 @@ ActiveRecord::Schema.define(version: 2021_11_10_114133) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "fridges", "users"
 end
