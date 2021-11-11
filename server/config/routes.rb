@@ -10,8 +10,6 @@ Rails.application.routes.draw do
         resources :sessions, only: [:index]
       end
 
-      resources :fridges, only: [:index, :show, :create]
-
     end
   end
 end
