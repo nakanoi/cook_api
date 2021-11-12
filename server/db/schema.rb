@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_114133) do
+ActiveRecord::Schema.define(version: 2021_11_11_113516) do
 
-  create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "foods", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "store", null: false
+    t.string "unit", null: false
+    t.boolean "ignore", default: true, null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_foods_on_user_id"
+  end
+
+  create_table "sessions", charset: "utf8mb4", force: :cascade do |t|
     t.string "session_id", null: false
     t.text "data"
     t.datetime "created_at", precision: 6, null: false
@@ -21,7 +32,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_114133) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -45,4 +56,5 @@ ActiveRecord::Schema.define(version: 2021_11_10_114133) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "foods", "users"
 end
