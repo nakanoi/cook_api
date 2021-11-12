@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_11_113516) do
+ActiveRecord::Schema.define(version: 2021_11_12_070142) do
 
   create_table "foods", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -21,6 +21,30 @@ ActiveRecord::Schema.define(version: 2021_11_11_113516) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_foods_on_user_id"
+  end
+
+  create_table "ingredients", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "menu_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["menu_id"], name: "index_ingredients_on_menu_id"
+  end
+
+  create_table "menus", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "img", null: false
+    t.string "medium_img", null: false
+    t.string "small_img", null: false
+    t.string "title", null: false
+    t.integer "menu_id", null: false
+    t.text "content", null: false
+    t.string "url", null: false
+    t.string "poster", null: false
+    t.string "indication", null: false
+    t.string "cost", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "sessions", charset: "utf8mb4", force: :cascade do |t|
@@ -57,4 +81,5 @@ ActiveRecord::Schema.define(version: 2021_11_11_113516) do
   end
 
   add_foreign_key "foods", "users"
+  add_foreign_key "ingredients", "menus"
 end
