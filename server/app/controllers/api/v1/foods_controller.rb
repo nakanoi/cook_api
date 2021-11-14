@@ -30,8 +30,17 @@ class Api::V1::FoodsController < ApplicationController
       all_foods[food.token] = food.user_id
     end
 
+    if not attributes.is_a?(Array)
+      render json: {
+        status: 400,
+        message: "You have to set Array in 'attributes'.",
+        attributes: attributes,
+      }
+    end
+
     for attribute in attributes
-      if all_foods[attribute[:token]] != attribute[:user_id]
+      if all_foods[attribute[:token]] and\
+         all_foods[attribute[:token]] != attribute[:user_id]
         render json: {
           status: 400,
           message: "One of your foods belongs to other user.",
