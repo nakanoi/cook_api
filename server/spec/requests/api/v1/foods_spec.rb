@@ -18,10 +18,7 @@ RSpec.describe "Api::V1::Foods", type: :request do
       user: @second_user,
     )
     @foods = [@tomato, @poke, @milk, @solt]
-    @params = {
-      updates: [],
-      news: [],
-    }
+    @params = {attributes: []}
   end
 
   describe "GET /api/v1/foods" do
@@ -103,11 +100,12 @@ RSpec.describe "Api::V1::Foods", type: :request do
     context "only create new foods with valid params" do
       it "get 200 status with 4 creates" do
         for food in @foods
-          @params[:news].push({
+          @params[:attributes].push({
             name: food.name,
             store: food.store,
             unit: food.unit,
             ignore: food.ignore,
+            token: food.token,
             user_id: @user.id,
             created_at: Time.now,
             updated_at: Time.now,
@@ -120,12 +118,7 @@ RSpec.describe "Api::V1::Foods", type: :request do
         expect(
           JSON.parse(
             response.body
-          )["update_attributes"].size
-        ).to eq(0)
-        expect(
-          JSON.parse(
-            response.body
-          )["new_attributes"].size
+          )["attributes"].size
         ).to eq(4)
       end
     end
@@ -138,12 +131,12 @@ RSpec.describe "Api::V1::Foods", type: :request do
         @solt.save
         @empty.save
         for food in @foods
-          @params[:updates].push({
-            id: food.id,
+          @params[:attributes].push({
             name: food.name,
             store: food.store,
             unit: food.unit,
             ignore: food.ignore,
+            token: food.token,
             user_id: @user.id,
             created_at: food.created_at,
             updated_at: Time.now,
@@ -156,13 +149,8 @@ RSpec.describe "Api::V1::Foods", type: :request do
         expect(
           JSON.parse(
             response.body
-          )["update_attributes"].size
+          )["attributes"].size
         ).to eq(4)
-        expect(
-          JSON.parse(
-            response.body
-          )["new_attributes"].size
-        ).to eq(0)
       end
     end
 
@@ -172,28 +160,16 @@ RSpec.describe "Api::V1::Foods", type: :request do
         @poke.save
         @milk.save
         for food in @foods
-          if food.created_at
-            @params[:updates].push({
-              id: food.id,
-              name: food.name,
-              store: food.store,
-              unit: food.unit,
-              ignore: food.ignore,
-              user_id: @user.id,
-              created_at: food.created_at,
-              updated_at: Time.now,
-            })
-          else
-            @params[:news].push({
-              name: food.name,
-              store: food.store,
-              unit: food.unit,
-              ignore: food.ignore,
-              user_id: @user.id,
-              created_at: Time.now,
-              updated_at: Time.now,
-            })
-          end
+          @params[:attributes].push({
+            name: food.name,
+            store: food.store,
+            unit: food.unit,
+            ignore: food.ignore,
+            token: food.token,
+            user_id: @user.id,
+            created_at: food.created_at,
+            updated_at: Time.now,
+          })
         end
         post "/api/v1/foods",
           params: @params.to_json,
@@ -202,13 +178,8 @@ RSpec.describe "Api::V1::Foods", type: :request do
         expect(
           JSON.parse(
             response.body
-          )["update_attributes"].size
-        ).to eq(3)
-        expect(
-          JSON.parse(
-            response.body
-          )["new_attributes"].size
-        ).to eq(1)
+          )["attributes"].size
+        ).to eq(4)
       end
     end
 
@@ -221,14 +192,19 @@ RSpec.describe "Api::V1::Foods", type: :request do
         @empty.save
         @other.save
         for food in @foods.push(@other)
-          @params[:updates].push({
-            id: food.id,
+          if food.created_at
+            created_at = food.created_at
+          else
+            created_at = Time.now
+          end
+          @params[:attributes].push({
             name: food.name,
             store: food.store,
             unit: food.unit,
             ignore: food.ignore,
+            token: food.token,
             user_id: @user.id,
-            created_at: food.created_at,
+            created_at: created_at,
             updated_at: Time.now,
           })
         end

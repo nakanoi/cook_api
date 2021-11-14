@@ -43,6 +43,16 @@ RSpec.describe Food, type: :model do
       end
     end
 
+    context "create food model with nil unit" do
+      it "Token can't be blank error occurs" do
+        @tomato.token = nil
+        @tomato.valid?
+        expect(@tomato.errors.full_messages).to include(
+          "Token can't be blank"
+        )
+      end
+    end
+
     context "create food model with nil user" do
       it "User can't be blank error occurs" do
         @tomato.user_id = nil

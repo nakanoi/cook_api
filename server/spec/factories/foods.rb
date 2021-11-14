@@ -4,6 +4,7 @@ FactoryBot.define do
     store { 2 }
     unit { "個" }
     ignore { false }
+    token { "gaiohfjlaihjfiwhjflalkvnls" }
     association :user
   end
 
@@ -12,6 +13,7 @@ FactoryBot.define do
     store { 500 }
     unit { "g" }
     ignore { false }
+    token { "gedkogks;kjvgpoe;akgdgbgrdgr" }
     association :user
   end
 
@@ -20,6 +22,7 @@ FactoryBot.define do
     store { 500 }
     unit { "ml" }
     ignore { true }
+    token { "egerojgv;lsajmgorejoaa" }
     association :user
   end
 
@@ -28,6 +31,7 @@ FactoryBot.define do
     store { 50 }
     unit { "%" }
     ignore { true }
+    token { "gekngv;lsmgpoag4gmladsmvlka" }
     association :user
   end
 
@@ -36,6 +40,7 @@ FactoryBot.define do
     store { 0 }
     unit { "個" }
     ignore { false }
+    token { "dfaojgoiejflaejfloejglojdkgjf" }
     association :user
   end
 
@@ -44,6 +49,7 @@ FactoryBot.define do
     store { 5 }
     unit { "個" }
     ignore { true }
+    token { "agojweflfowjFHIEJFLIALSGDRE" }
     association :user, factory: :second_user
   end
 end
