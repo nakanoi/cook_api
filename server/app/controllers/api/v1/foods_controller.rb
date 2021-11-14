@@ -24,31 +24,31 @@ class Api::V1::FoodsController < ApplicationController
   end
 
   def create
-    update_attributes = params[:updates]
-    new_attributes = params[:news]
-    exist_food_ids = current_api_v1_user.foods.pluck(:id)
-    for update in update_attributes.pluck(:id)
-      if not exist_food_ids.include?(update)
+    attributes = params[:attributes]
+    all_foods = {}
+    Food.all.each do |food|
+      all_foods[food.token] = food.user_id
+    end
+
+    for attribute in attributes
+      if all_foods[attribute[:token]] != attribute[:user_id]
         render json: {
           status: 400,
-          message: "Update params contains non exist id."
+          message: "One of your foods belongs to other user.",
+          attributes: attributes,
         }
         return
       end
     end
 
-    if update_attributes.present?
-      Food.upsert_all(update_attributes)
-    end
-    if new_attributes.present?
-      Food.insert_all(new_attributes)
+    if attributes.present?
+      Food.upsert_all(attributes)
     end
 
     render json: {
       status: 200,
       message: "Successfully updated all params.",
-      update_attributes: update_attributes,
-      new_attributes: new_attributes,
+      attributes: attributes,
     }
   end
 end
