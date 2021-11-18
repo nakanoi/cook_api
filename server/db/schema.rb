@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_120659) do
+ActiveRecord::Schema.define(version: 2021_11_18_010444) do
 
   create_table "categories", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 2021_11_12_120659) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id", "url", "query"], name: "ingredient_index", unique: true
+  end
+
+  create_table "crono_jobs", charset: "utf8mb4", force: :cascade do |t|
+    t.string "job_id", null: false
+    t.text "log", size: :long
+    t.datetime "last_performed_at"
+    t.boolean "healthy"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_crono_jobs_on_job_id", unique: true
   end
 
   create_table "foods", charset: "utf8mb4", force: :cascade do |t|
