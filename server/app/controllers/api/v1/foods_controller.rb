@@ -49,6 +49,7 @@ class Api::V1::FoodsController < ApplicationController
         return
       end
     end
+    puts attributes.present?
 
     if attributes.present?
       Food.upsert_all(attributes)

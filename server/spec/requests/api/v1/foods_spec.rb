@@ -160,6 +160,7 @@ RSpec.describe "Api::V1::Foods", type: :request do
         @poke.save
         @milk.save
         for food in @foods
+          created_at = food.created_at.nil? ? Time.now : food.created_at
           @params[:attributes].push({
             name: food.name,
             store: food.store,
@@ -167,7 +168,7 @@ RSpec.describe "Api::V1::Foods", type: :request do
             ignore: food.ignore,
             token: food.token,
             user_id: @user.id,
-            created_at: food.created_at,
+            created_at: created_at,
             updated_at: Time.now,
           })
         end
