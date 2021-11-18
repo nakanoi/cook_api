@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_010444) do
+ActiveRecord::Schema.define(version: 2021_11_18_133536) do
 
   create_table "categories", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +43,17 @@ ActiveRecord::Schema.define(version: 2021_11_18_010444) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["token"], name: "index_foods_on_token", unique: true
     t.index ["user_id"], name: "index_foods_on_user_id"
+  end
+
+  create_table "histories", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "menu_id", null: false
+    t.string "food", null: false
+    t.date "day", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["menu_id"], name: "index_histories_on_menu_id"
+    t.index ["user_id"], name: "index_histories_on_user_id"
   end
 
   create_table "ingredients", charset: "utf8mb4", force: :cascade do |t|
@@ -105,5 +116,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_010444) do
   end
 
   add_foreign_key "foods", "users"
+  add_foreign_key "histories", "menus", primary_key: "menu_id"
+  add_foreign_key "histories", "users"
   add_foreign_key "ingredients", "menus", primary_key: "menu_id"
 end

@@ -14,4 +14,5 @@ class Menu < ApplicationRecord
   validates :cost, presence: true
 
   has_many :ingredients
+  has_many :users, through: :histories
 end

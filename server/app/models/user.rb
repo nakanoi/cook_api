@@ -11,5 +11,10 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
 
   has_many :foods
+  has_many :histories
+  has_many :menus, through: :histories
 
+  def recent_menus
+    self.menus.where("day >= '#{Date.today - 7.days}'")
+  end
 end
