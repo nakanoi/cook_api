@@ -63,7 +63,7 @@ RSpec.describe "Api::V1::Foods", type: :request do
           headers: @user_headers
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)["status"]).to eq(200)
-        expect(JSON.parse(response.body)["food"]["id"]).to eq(@tomato.id)
+        expect(JSON.parse(response.body)["id"]).to eq(@tomato.id)
       end
     end
 

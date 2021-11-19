@@ -2,7 +2,9 @@ class Api::V1::FoodsController < ApplicationController
   before_action :authenticate_api_v1_user!, only: [:index, :show, :create]
 
   def index
-    render json: current_api_v1_user.foods
+    render json: @current_api_v1_user.foods,
+      each_serializer: FoodSerializer,
+      status: 200
   end
 
   def show
@@ -11,15 +13,11 @@ class Api::V1::FoodsController < ApplicationController
       user: current_api_v1_user,
     )
     if food
-      render json: {
-        status: 200,
-        food: food,
-      }
+      render json: food,
+        serializer: FoodSerializer,
+        status: status
     else
-      render json: {
-        status: 404,
-        food: nil,
-      }
+      render json: {status: 404}
     end
   end
 
@@ -49,7 +47,6 @@ class Api::V1::FoodsController < ApplicationController
         return
       end
     end
-    puts attributes.present?
 
     if attributes.present?
       Food.upsert_all(attributes)

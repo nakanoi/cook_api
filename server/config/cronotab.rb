@@ -13,4 +13,4 @@
 #
 # Crono.perform(TestJob).every 2.days, at: '15:30'
 #
-Crono.perform(SendRecipeJob).every 1.days, at: {hour: 16, min: 0}
+Crono.perform(SendRecipeJob).every 1.days, at: '16:30'

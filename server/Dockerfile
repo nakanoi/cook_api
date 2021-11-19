@@ -12,4 +12,4 @@ COPY entrypoint.sh /usr/bin/
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-CMD ["bundle", "exec", "crono", "start", "&&", "bundle", "exec", "puma", "-C", "/code/config/puma.rb"]
+CMD ["bundle", "exec", "rails", "db:migrate", "&&", "bundle", "exec", "crono", "start", "&&", "bundle", "exec", "puma", "-C", "/code/config/puma.rb"]
