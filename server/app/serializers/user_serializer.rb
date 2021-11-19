@@ -15,7 +15,6 @@ class UserSerializer < ActiveModel::Serializer
 
   has_many :foods, each_serializer: FoodSerializer
   has_many :histories, serializer: HistorySerializer do
-    puts @object.histories.where("day >= '#{Date.today - 7.days}'")
-    @object.histories.where("day >= '#{Date.today - 7.days}'")
+    @object.histories.eager_load(:menu).where("day >= '#{Date.today - 7.days}'")
   end
 end

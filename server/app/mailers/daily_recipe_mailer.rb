@@ -16,7 +16,7 @@ class DailyRecipeMailer < ApplicationMailer
       return
     end
 
-    Ingredient.where(
+    Ingredient.eager_load(:menu).where(
       name: @today_main_food.name
     ).sample(3).each do |ingredient|
       @recipes.push(ingredient.menu)
