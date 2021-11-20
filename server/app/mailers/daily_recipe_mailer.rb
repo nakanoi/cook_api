@@ -20,6 +20,12 @@ class DailyRecipeMailer < ApplicationMailer
       name: @today_main_food.name
     ).sample(3).each do |ingredient|
       @recipes.push(ingredient.menu)
+      History.create!(
+        user: user,
+        menu: ingredient.menu,
+        food: @today_main_food.name,
+        day: Date.today,
+      )
     end
 
     mail to: user.email, subject: "今日の晩御飯のレシピ ~#{@today_main_food.name}~"

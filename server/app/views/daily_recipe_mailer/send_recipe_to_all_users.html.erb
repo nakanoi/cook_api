@@ -1,8 +1,18 @@
 <h1>メール送信 to <%= @user.name %></h1>
 <h2>選ばれた今日のメイン食材は<%= @today_main_food.name %>.</h2>
-<h2>レシピ</h2>
 <% @recipes.each do |recipe| %>
-  <section>
-    <h3>レシピ名 <%= recipe.name %></h3>
+  <section class="recipe-wrap">
+    <h3><%= recipe.name %></h3>
+    <p class="img-wrap">
+      <img src="<%= recipe.img %>" alt="料理画像">
+    </p>
+    <p class="content"><%= recipe.content %></p>
+    <div class="details">
+      <p>所要時間 <%= recipe.indication %></p>
+      <p>コスト <%= recipe.cost %></p>
+    </div>
+    <p class="link">
+      <a href="<%= recipe.url %>">レシピを見る</a>
+    <p>
   </section>
 <% end %>
