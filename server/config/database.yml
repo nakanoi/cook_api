@@ -50,6 +50,7 @@ test:
 #
 production:
   <<: *default
-  database: code_production
-  username: code
-  password: <%= ENV['CODE_DATABASE_PASSWORD'] %>
+  database: <%= ENV.fetch("PROD_MYSQL_DATABASE") %>
+  username: <%= ENV.fetch("PROD_MYSQL_USER") %>
+  password: <%= ENV.fetch("PROD_MYSQL_PASSWORD") %>
+  host: <%= ENV.fetch("PROD_MYSQL_HOST") %>
