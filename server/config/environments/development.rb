@@ -83,4 +83,15 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+  config.middleware.use Rack::Cors do
+    allow do
+      origins 'https://localhost', 'https://localhost:8000'
+      resource '*',
+               :headers => :any,
+               :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+               :methods => [:get, :post, :put, :patch, :delete, :options, :head],
+               :credentials => true
+    end
+  end
+  config.hosts << "localhost" << "mealist.local"
 end

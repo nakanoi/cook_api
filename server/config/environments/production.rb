@@ -120,5 +120,15 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  config.hosts << "localhost"
+  config.middleware.use Rack::Cors do
+    allow do
+      origins 'https://mealist.net', 'https://mealist.net:8000'
+      resource '*',
+               :headers => :any,
+               :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+               :methods => [:get, :post, :put, :patch, :delete, :options, :head],
+               :credentials => true
+    end
+  end
+  config.hosts << "api.mealist.net" << "api.mealist.net:8443"
 end

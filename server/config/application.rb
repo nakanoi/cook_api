@@ -42,15 +42,6 @@ module Code
     config.session_store :active_record_store
     config.middleware.use ActionDispatch::Session::ActiveRecordStore
     config.middleware.use ActionDispatch::Flash
-    config.middleware.use Rack::Cors do
-      allow do
-        origins '*'
-        resource '*',
-                 :headers => :any,
-                 :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-                 :methods => [:get, :post, :options, :delete, :put]
-      end
-    end
     config.hosts << '.example.com'
   end
 end
