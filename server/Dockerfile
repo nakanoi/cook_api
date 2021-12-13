@@ -8,8 +8,9 @@ COPY Gemfile.lock /code/Gemfile.lock
 RUN bundle install
 
 COPY . /code
+RUN ["/bin/bash", "-c", "source /code/.env"]
 COPY entrypoint.sh /usr/bin/
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-CMD ["bundle", "exec", "puma", "-C", "/code/config/puma.rb"]
+CMD ["sh", "run.sh"]

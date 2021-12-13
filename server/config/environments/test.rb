@@ -41,7 +41,16 @@ Rails.application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    port: 587,
+    address: 'smtp.gmail.com',
+    domain: 'smtp.gmail.com',
+    user_name: ENV['TEST_MAIL_USER_NAME'],
+    password: ENV['TEST_MAIL_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true,
+  }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

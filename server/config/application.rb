@@ -23,6 +23,8 @@ module Code
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -36,5 +38,10 @@ module Code
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.session_store :active_record_store
+    config.middleware.use ActionDispatch::Session::ActiveRecordStore
+    config.middleware.use ActionDispatch::Flash
+    config.hosts << '.example.com'
   end
 end
