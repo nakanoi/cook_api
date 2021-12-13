@@ -23,6 +23,8 @@ class Api::V1::FoodsController < ApplicationController
 
   def create
     attributes = params[:attributes]
+    logger.info(params)
+    logger.info(attributes)
     all_foods = {}
     Food.all.each do |food|
       all_foods[food.token] = food.user_id
