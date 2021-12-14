@@ -1,4 +1,5 @@
 class DailyRecipeMailer < ApplicationMailer
+  layout 'send_recipe_to_user'
   def send_recipe_to_user(user)
     @user = user
     selection = []
@@ -30,11 +31,4 @@ class DailyRecipeMailer < ApplicationMailer
 
     mail to: user.email, subject: "今日の晩御飯のレシピ ~#{@today_main_food.name}~"
   end
-
-  def send_recipe_to_all_users
-    User.all.each do |user|
-      send_recipe_to_user(user)
-    end
-  end
-
 end
