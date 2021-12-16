@@ -1,5 +1,4 @@
 class DailyRecipeMailer < ApplicationMailer
-  layout 'send_recipe_to_user'
   def send_recipe_to_user(user)
     @user = user
     selection = []
