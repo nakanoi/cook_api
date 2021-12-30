@@ -42,6 +42,6 @@ module Code
     config.session_store :active_record_store
     config.middleware.use ActionDispatch::Session::ActiveRecordStore
     config.middleware.use ActionDispatch::Flash
-    config.hosts << '.example.com'
+    config.hosts << ".example.com" << "localhost" << "localhost:8443"
   end
 end
