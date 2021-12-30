@@ -1,4 +1,8 @@
 class DailyRecipeMailer < ApplicationMailer
+  def jobLogger
+    Crono.logger.nil? ? Rails.logger : Crono.logger
+  end
+
   def send_recipe_to_user(user)
     @user = user
     selection = []
@@ -13,6 +17,7 @@ class DailyRecipeMailer < ApplicationMailer
     @recipes = []
 
     if @today_main_food.nil?
+      jobLogger.info("Mail to #{user.email}: Has no food.")
       return
     end
 
@@ -28,13 +33,7 @@ class DailyRecipeMailer < ApplicationMailer
       )
     end
 
+    jobLogger.info("Mail to #{user.email}: Today's food is #{@today_main_food.name}")
     mail to: user.email, subject: "今日の晩御飯のレシピ ~#{@today_main_food.name}~"
   end
-
-  def send_recipe_to_all_users
-    User.all.each do |user|
-      send_recipe_to_user(user)
-    end
-  end
-
 end
